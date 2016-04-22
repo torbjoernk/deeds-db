@@ -1,0 +1,10 @@
+machine:
+  ruby:
+    version: 2.3.0
+  environment:
+    DB_USER: ubuntu
+    DB_NAME: circle_test
+
+dependencies:
+  bundler:
+    without: [headfultest]
