@@ -41,6 +41,7 @@ group :development do
 end
 
 group :ci do
+  gem 'rspec_junit_formatter', '0.2.2'
   gem 'coveralls', require: false
   gem 'codeclimate-test-reporter', require: false
 end

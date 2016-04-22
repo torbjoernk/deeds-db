@@ -1,0 +1,14 @@
+machine:
+  ruby:
+    version: 2.3.0
+  environment:
+    DB_USER: ubuntu
+    DB_NAME: circle_test
+
+dependencies:
+  bundler:
+    without: [headfultest]
+
+test:
+  override:
+    - RAILS_ENV=test bundle exec rspec -r rspec_junit_formatter --format RspecJunitFormatter -o $CIRCLE_TEST_REPORTS/rspec/junit.xml
