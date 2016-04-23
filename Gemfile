@@ -24,6 +24,7 @@ group :test do
   gem 'poltergeist'
   gem 'database_cleaner'
   gem 'simplecov'
+  gem 'sauce_whisk'
 
   gem 'guard-rspec', require: false
 end

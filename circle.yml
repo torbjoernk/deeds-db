@@ -4,11 +4,18 @@ machine:
   environment:
     DB_USER: ubuntu
     DB_NAME: circle_test
+    SAUCE_USERNAME: torbjoernk
 
 dependencies:
   bundler:
     without: [headfultest]
+  post:
+    - wget https://saucelabs.com/downloads/sc-latest-linux.tar.gz
+    - tar -xzf sc-latest-linux.tar.gz
 
 test:
   override:
-    - RAILS_ENV=test bundle exec rspec -r rspec_junit_formatter --format RspecJunitFormatter -o $CIRCLE_TEST_REPORTS/rspec/junit.xml
+    - cd sc-*-linux && ./bin/sc -u $SAUCE_USERNAME -k $SAUCE_ACCESS_KEY:
+        background: true
+    - ./circleci.sh:
+        parallel: true
