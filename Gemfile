@@ -15,7 +15,7 @@ gem 'breadcrumbs_on_rails', '>=2.3.0'
 
 gem 'bcrypt', '~> 3.1.7'
 
-group :test do
+group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'faker'
@@ -27,6 +27,8 @@ group :test do
   gem 'sauce_whisk'
 
   gem 'guard-rspec', require: false
+  gem 'i18n-tasks', '~> 0.9.5'
+  gem 'byebug'
 end
 
 group :headfultest do
@@ -37,8 +39,6 @@ end
 group :development do
   gem 'web-console'#, '~> 2.0'
   gem 'spring'
-  gem 'i18n-tasks', '~> 0.9.5'
-  gem 'byebug'
 end
 
 group :ci do
