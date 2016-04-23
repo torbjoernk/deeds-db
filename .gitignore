@@ -8,3 +8,6 @@ config/secrets.yml
 /log/*
 !/log/.keep
 /tmp
+
+# Ignore coverage reports
+/coverage
