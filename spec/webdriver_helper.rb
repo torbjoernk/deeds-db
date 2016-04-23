@@ -17,4 +17,6 @@ if driver == :saucelabs
       end
     end
   end
+
+  puts 'Using SauceLabs web driver for :run_on_sauce examples.'
 end
