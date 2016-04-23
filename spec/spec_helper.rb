@@ -94,3 +94,6 @@ RSpec.configure do |config|
   #Kernel.srand config.seed
 
 end
+
+require_relative 'codeclimate_helper'
+require_relative 'coveralls_helper'
