@@ -71,17 +71,11 @@ RSpec.describe FuzzyYear, type: :concern do
       end
 
       specify 'denies non-numbers "XYZ-ABC"' do
-        expect {
-          FuzzyYear.new('1234-abc')
-        }.to raise_error StandardError
-
-        expect {
-          FuzzyYear.new('abc-1234')
-        }.to raise_error StandardError
-
-        expect {
-          FuzzyYear.new('abc-def')
-        }.to raise_error StandardError
+        %w(1234-abc abc-1234 abc-def).each do |arg|
+          expect {
+            FuzzyYear.new(arg)
+          }.to raise_error StandardError
+        end
       end
 
 
@@ -108,12 +102,10 @@ RSpec.describe FuzzyYear, type: :concern do
       let(:fuzzy_year) { FuzzyYear.new('12') }
 
       context 'is smaller' do
-        specify 'than "12-13"' do
-          expect(fuzzy_year < FuzzyYear.new('12-13')).to be_truthy
-        end
-
-        specify 'than "13"' do
-          expect(fuzzy_year < FuzzyYear.new('13')).to be_truthy
+        %w(12-13 13).each do |arg|
+          specify "than \"#{arg}\"" do
+            expect(fuzzy_year < FuzzyYear.new(arg)).to be_truthy
+          end
         end
       end
 
@@ -124,12 +116,10 @@ RSpec.describe FuzzyYear, type: :concern do
       end
 
       context 'is larger' do
-        specify 'than "11"' do
-          expect(fuzzy_year > FuzzyYear.new('11')).to be_truthy
-        end
-
-        specify 'than "11-13"' do
-          expect(fuzzy_year > FuzzyYear.new('11-13')).to be_truthy
+        %w(11 11-13).each do |arg|
+          specify "than \"#{arg}\"" do
+            expect(fuzzy_year > FuzzyYear.new(arg)).to be_truthy
+          end
         end
       end
 
@@ -142,16 +132,10 @@ RSpec.describe FuzzyYear, type: :concern do
       let(:fuzzy_year) { FuzzyYear.new('12-14') }
 
       context 'is smaller' do
-        specify 'than "13"' do
-          expect(fuzzy_year < FuzzyYear.new('13')).to be_truthy
-        end
-
-        specify 'than "12-15"' do
-          expect(fuzzy_year < FuzzyYear.new('12-15')).to be_truthy
-        end
-
-        specify 'than "13-14"' do
-          expect(fuzzy_year < FuzzyYear.new('13-14')).to be_truthy
+        %w(13 12-15 13-14).each do |arg|
+          specify "than \"#{arg}\"" do
+            expect(fuzzy_year < FuzzyYear.new(arg)).to be_truthy
+          end
         end
       end
 
@@ -162,16 +146,10 @@ RSpec.describe FuzzyYear, type: :concern do
       end
 
       context 'is larger' do
-        specify 'than "11"' do
-          expect(fuzzy_year > FuzzyYear.new('11')).to be_truthy
-        end
-
-        specify 'than "12"' do
-          expect(fuzzy_year > FuzzyYear.new('12')).to be_truthy
-        end
-
-        specify 'than "12-13"' do
-          expect(fuzzy_year > FuzzyYear.new('12-13')).to be_truthy
+        %w(11 12 12-13).each do |arg|
+          specify "than \"#{arg}\"" do
+            expect(fuzzy_year > FuzzyYear.new(arg)).to be_truthy
+          end
         end
       end
     end
@@ -286,12 +264,10 @@ RSpec.describe FuzzyMonth, type: :concern do
       let(:fuzzy_month) { FuzzyMonth.new('2') }
 
       context 'is smaller' do
-        specify 'than "2-3"' do
-          expect(fuzzy_month < FuzzyMonth.new('2-3')).to be_truthy
-        end
-
-        specify 'than "3"' do
-          expect(fuzzy_month < FuzzyMonth.new('3')).to be_truthy
+        %w(2-3 3).each do |arg|
+          specify "than \"#{arg}\"" do
+            expect(fuzzy_month < FuzzyMonth.new(arg)).to be_truthy
+          end
         end
       end
 
@@ -302,12 +278,10 @@ RSpec.describe FuzzyMonth, type: :concern do
       end
 
       context 'is larger' do
-        specify 'than "1"' do
-          expect(fuzzy_month > FuzzyMonth.new('1')).to be_truthy
-        end
-
-        specify 'than "1-3"' do
-          expect(fuzzy_month > FuzzyMonth.new('1-3')).to be_truthy
+        %w(1 1-3).each do |arg|
+          specify "than \"#{arg}\"" do
+            expect(fuzzy_month > FuzzyMonth.new(arg)).to be_truthy
+          end
         end
       end
 
@@ -320,16 +294,10 @@ RSpec.describe FuzzyMonth, type: :concern do
       let(:fuzzy_month) { FuzzyMonth.new('2-4') }
 
       context 'is smaller' do
-        specify 'than "3"' do
-          expect(fuzzy_month < FuzzyMonth.new('3')).to be_truthy
-        end
-
-        specify 'than "2-5"' do
-          expect(fuzzy_month < FuzzyMonth.new('2-5')).to be_truthy
-        end
-
-        specify 'than "3-4"' do
-          expect(fuzzy_month < FuzzyMonth.new('3-4')).to be_truthy
+        %w(3 2-5 3-4).each do |arg|
+          specify "than \"#{arg}\"" do
+            expect(fuzzy_month < FuzzyMonth.new(arg)).to be_truthy
+          end
         end
       end
 
@@ -340,16 +308,10 @@ RSpec.describe FuzzyMonth, type: :concern do
       end
 
       context 'is larger' do
-        specify 'than "1"' do
-          expect(fuzzy_month > FuzzyMonth.new('1')).to be_truthy
-        end
-
-        specify 'than "2"' do
-          expect(fuzzy_month > FuzzyMonth.new('2')).to be_truthy
-        end
-
-        specify 'than "2-3"' do
-          expect(fuzzy_month > FuzzyMonth.new('2-3')).to be_truthy
+        %w(1 2 2-3).each do |arg|
+          specify "than \"#{arg}\"" do
+            expect(fuzzy_month > FuzzyMonth.new(arg)).to be_truthy
+          end
         end
       end
     end
@@ -387,17 +349,11 @@ RSpec.describe FuzzyDay, type: :concern do
       end
 
       specify 'denies non-numbers "XYZ-ABC"' do
-        expect {
-          FuzzyDay.new('1234-abc')
-        }.to raise_error StandardError
-
-        expect {
-          FuzzyDay.new('abc-1234')
-        }.to raise_error StandardError
-
-        expect {
-          FuzzyDay.new('abc-def')
-        }.to raise_error StandardError
+        %w(1234-abc abc-1234 abc-def).each do |arg|
+          expect {
+            FuzzyDay.new(arg)
+          }.to raise_error StandardError
+        end
       end
 
 
@@ -424,12 +380,10 @@ RSpec.describe FuzzyDay, type: :concern do
       let(:fuzzy_day) { FuzzyDay.new('12') }
 
       context 'is smaller' do
-        specify 'than "12-13"' do
-          expect(fuzzy_day < FuzzyDay.new('12-13')).to be_truthy
-        end
-
-        specify 'than "13"' do
-          expect(fuzzy_day < FuzzyDay.new('13')).to be_truthy
+        %w(12-13 13).each do |arg|
+          specify "than \"#{arg}\"" do
+            expect(fuzzy_day < FuzzyDay.new(arg)).to be_truthy
+          end
         end
       end
 
@@ -440,12 +394,10 @@ RSpec.describe FuzzyDay, type: :concern do
       end
 
       context 'is larger' do
-        specify 'than "11"' do
-          expect(fuzzy_day > FuzzyDay.new('11')).to be_truthy
-        end
-
-        specify 'than "11-13"' do
-          expect(fuzzy_day > FuzzyDay.new('11-13')).to be_truthy
+        %w(11 11-13).each do |arg|
+          specify "than \"#{arg}\"" do
+            expect(fuzzy_day > FuzzyDay.new(arg)).to be_truthy
+          end
         end
       end
 
@@ -458,16 +410,10 @@ RSpec.describe FuzzyDay, type: :concern do
       let(:fuzzy_day) { FuzzyDay.new('12-14') }
 
       context 'is smaller' do
-        specify 'than "13"' do
-          expect(fuzzy_day < FuzzyDay.new('13')).to be_truthy
-        end
-
-        specify 'than "12-15"' do
-          expect(fuzzy_day < FuzzyDay.new('12-15')).to be_truthy
-        end
-
-        specify 'than "13-14"' do
-          expect(fuzzy_day < FuzzyDay.new('13-14')).to be_truthy
+        %w(13 12-15 13-14).each do |arg|
+          specify "than \"#{arg}\"" do
+            expect(fuzzy_day < FuzzyDay.new(arg)).to be_truthy
+          end
         end
       end
 
@@ -478,16 +424,10 @@ RSpec.describe FuzzyDay, type: :concern do
       end
 
       context 'is larger' do
-        specify 'than "11"' do
-          expect(fuzzy_day > FuzzyDay.new('11')).to be_truthy
-        end
-
-        specify 'than "12"' do
-          expect(fuzzy_day > FuzzyDay.new('12')).to be_truthy
-        end
-
-        specify 'than "12-13"' do
-          expect(fuzzy_day > FuzzyDay.new('12-13')).to be_truthy
+        %w(11 12 12-13).each do |arg|
+          specify "than \"#{arg}\"" do
+            expect(fuzzy_day > FuzzyDay.new(arg)).to be_truthy
+          end
         end
       end
     end
@@ -521,14 +461,6 @@ RSpec.describe FuzzyDate, type: :concern do
         specify 'than "1234-03-27"' do
           expect(date < Date.new(1234, 3, 27)).to be_truthy
         end
-
-        specify 'than "1234-03-26 - 5678-02-14"' do
-          expect(date < FuzzyDate.new(date.year, date.month, FuzzyDay.new('26-14'))).to be_truthy
-        end
-
-        specify 'than "1234-03-27 - 5678-02-13"' do
-          expect(date < FuzzyDate.new(date.year, date.month, FuzzyDay.new('27-13'))).to be_truthy
-        end
       end
 
       context 'is equal' do
@@ -540,14 +472,6 @@ RSpec.describe FuzzyDate, type: :concern do
       context 'is larger' do
         specify 'than "1234-03-26"' do
           expect(date > Date.new(1234, 3, 26)).to be_truthy
-        end
-
-        specify 'than "1234-03-26 - 5678-02-12"' do
-          expect(date > FuzzyDate.new(date.year, date.month, FuzzyDay.new('26-12'))).to be_truthy
-        end
-
-        specify 'than "1234-03-25 - 5678-02-13"' do
-          expect(date > FuzzyDate.new(date.year, date.month, FuzzyDay.new('25-13'))).to be_truthy
         end
       end
     end
