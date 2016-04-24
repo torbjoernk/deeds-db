@@ -73,7 +73,6 @@ class FuzzyDatePart
     @value
   end
 
-  protected
   def parse
     if @value.empty?
       return nil
@@ -105,12 +104,10 @@ class FuzzyDatePart
     end
   end
 
-  protected
   def parse_number(string)
     string.to_i
   end
 
-  protected
   def name_to_number(name)
   end
 end
@@ -125,7 +122,6 @@ class FuzzyYear < FuzzyDatePart
     super
   end
 
-  protected
   def name_to_number(name)
     raise StandardError, "Year value '#{name}' cannot be interpreted as a year number."
   end
@@ -141,7 +137,6 @@ class FuzzyMonth < FuzzyDatePart
     super
   end
 
-  protected
   def parse_number(string)
     number = super
 
@@ -152,7 +147,6 @@ class FuzzyMonth < FuzzyDatePart
     number
   end
 
-  protected
   def name_to_number(name)
     if Date::MONTHNAMES.include? name
       Date::MONTHNAMES.index name
@@ -174,7 +168,6 @@ class FuzzyDay < FuzzyDatePart
     super
   end
 
-  protected
   def name_to_number(name)
     raise StandardError, "Day value '#{name}' cannot be interpreted as a day number."
   end
@@ -248,7 +241,6 @@ class FuzzyDate
     end
   end
 
-  private
   def finalize
     begin_year, begin_month, begin_day = 0, 1, 1
     end_year, end_month, end_day = Date.today.year, 12, -1
