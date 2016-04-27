@@ -37,6 +37,10 @@ class FuzzyDatePart
   end
 
   def <=>(other)
+    unless other.class == self.class
+      return nil
+    end
+
     if self.is_fuzzy
       if other.is_fuzzy
         if self.first != other.first
@@ -69,7 +73,6 @@ class FuzzyDatePart
   end
 
   def to_s
-    #TODO improve
     @value
   end
 
@@ -114,14 +117,6 @@ end
 
 
 class FuzzyYear < FuzzyDatePart
-  def <=>(other)
-    unless other.is_a? FuzzyYear
-      return nil
-    end
-
-    super
-  end
-
   def name_to_number(name)
     raise StandardError, "Year value '#{name}' cannot be interpreted as a year number."
   end
@@ -160,14 +155,6 @@ end
 
 
 class FuzzyDay < FuzzyDatePart
-  def <=>(other)
-    unless other.is_a? FuzzyDay
-      return nil
-    end
-
-    super
-  end
-
   def name_to_number(name)
     raise StandardError, "Day value '#{name}' cannot be interpreted as a day number."
   end
@@ -242,25 +229,50 @@ class FuzzyDate
   end
 
   def finalize
-    begin_year, begin_month, begin_day = 0, 1, 1
-    end_year, end_month, end_day = Date.today.year, 12, -1
+    begin_year, end_year = finalize_year
+    begin_month, end_month = finalize_month
+    begin_day, end_day = finalize_day
+
+    @begin = Date.new(begin_year, begin_month, begin_day)
+    @end = Date.new(end_year, end_month, end_day)
+  end
+
+  private
+  def finalize_year
+    begin_year = 0
+    end_year = Date.today.year
 
     if @year
       begin_year = @year.first unless @year.first.nil?
       end_year = @year.last unless @year.last.nil?
     end
 
+    [begin_year, end_year]
+  end
+
+  private
+  def finalize_month
+    begin_month = 1
+    end_month = 12
+
     if @month
       begin_month = @month.first unless @month.first.nil?
       end_month = @month.last unless @month.last.nil?
     end
+
+    [begin_month, end_month]
+  end
+
+  private
+  def finalize_day
+    begin_day = 1
+    end_day = -1
 
     if @day
       begin_day = @day.first unless @day.first.nil?
       end_day = @day.last unless @day.last.nil?
     end
 
-    @begin = Date.new(begin_year, begin_month, begin_day)
-    @end = Date.new(end_year, end_month, end_day)
+    [begin_day, end_day]
   end
 end
