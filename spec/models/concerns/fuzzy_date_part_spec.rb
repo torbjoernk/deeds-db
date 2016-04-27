@@ -93,67 +93,26 @@ RSpec.describe FuzzyYear, type: :concern do
     end
   end
 
-  context 'Comparable' do
-    specify 'is incomparable to other objects' do
-      expect(fuzzy_year <=> '12').to be_nil
-    end
-
-    context 'with value "12"' do
-      let(:fuzzy_year) { FuzzyYear.new('12') }
-
-      context 'is smaller' do
-        %w(12-13 13).each do |arg|
-          specify "than \"#{arg}\"" do
-            expect(fuzzy_year < FuzzyYear.new(arg)).to be_truthy
-          end
-        end
-      end
-
-      context 'is equal' do
-        specify 'to "12"' do
-          expect(fuzzy_year == FuzzyYear.new('12')).to be_truthy
-        end
-      end
-
-      context 'is larger' do
-        %w(11 11-13).each do |arg|
-          specify "than \"#{arg}\"" do
-            expect(fuzzy_year > FuzzyYear.new(arg)).to be_truthy
-          end
-        end
-      end
-
-      specify 'is incomparable to nil' do
-        expect(fuzzy_year <=> FuzzyYear.new).to be_nil
-      end
-    end
-
-    context 'with value "12-14"' do
-      let(:fuzzy_year) { FuzzyYear.new('12-14') }
-
-      context 'is smaller' do
-        %w(13 12-15 13-14).each do |arg|
-          specify "than \"#{arg}\"" do
-            expect(fuzzy_year < FuzzyYear.new(arg)).to be_truthy
-          end
-        end
-      end
-
-      context 'is equal' do
-        specify 'to "12-14"' do
-          expect(fuzzy_year == FuzzyYear.new('12-14')).to be_truthy
-        end
-      end
-
-      context 'is larger' do
-        %w(11 12 12-13).each do |arg|
-          specify "than \"#{arg}\"" do
-            expect(fuzzy_year > FuzzyYear.new(arg)).to be_truthy
-          end
-        end
-      end
-    end
-  end
+  it_behaves_like 'a comparable object', {
+      test_klass: FuzzyYear,
+      invalid_other: [nil, '12'],
+      cases: [
+          {
+              arg: '12',
+              init_other: true,
+              less: %w(13 12-13),
+              equal: [:same_args],
+              greater: %w(11 11-13)
+          },
+          {
+              arg: '12-14',
+              init_other: true,
+              less: %w(13 12-15 13-14),
+              equal: [:same_args],
+              greater: %w(11 12 12-13)
+          }
+      ]
+  }
 
   describe '#to_s' do
     specify 'just the value' do
@@ -255,67 +214,26 @@ RSpec.describe FuzzyMonth, type: :concern do
     end
   end
 
-  context 'Comparable' do
-    specify 'is incomparable to other objects' do
-      expect(fuzzy_month <=> '1').to be_nil
-    end
-
-    context 'with value "2"' do
-      let(:fuzzy_month) { FuzzyMonth.new('2') }
-
-      context 'is smaller' do
-        %w(2-3 3).each do |arg|
-          specify "than \"#{arg}\"" do
-            expect(fuzzy_month < FuzzyMonth.new(arg)).to be_truthy
-          end
-        end
-      end
-
-      context 'is equal' do
-        specify 'to "2"' do
-          expect(fuzzy_month == FuzzyMonth.new('2')).to be_truthy
-        end
-      end
-
-      context 'is larger' do
-        %w(1 1-3).each do |arg|
-          specify "than \"#{arg}\"" do
-            expect(fuzzy_month > FuzzyMonth.new(arg)).to be_truthy
-          end
-        end
-      end
-
-      specify 'is incomparable to nil' do
-        expect(fuzzy_month <=> FuzzyMonth.new).to be_nil
-      end
-    end
-
-    context 'with value "2-4"' do
-      let(:fuzzy_month) { FuzzyMonth.new('2-4') }
-
-      context 'is smaller' do
-        %w(3 2-5 3-4).each do |arg|
-          specify "than \"#{arg}\"" do
-            expect(fuzzy_month < FuzzyMonth.new(arg)).to be_truthy
-          end
-        end
-      end
-
-      context 'is equal' do
-        specify 'to "2-4"' do
-          expect(fuzzy_month == FuzzyMonth.new('2-4')).to be_truthy
-        end
-      end
-
-      context 'is larger' do
-        %w(1 2 2-3).each do |arg|
-          specify "than \"#{arg}\"" do
-            expect(fuzzy_month > FuzzyMonth.new(arg)).to be_truthy
-          end
-        end
-      end
-    end
-  end
+  it_behaves_like 'a comparable object', {
+      test_klass: FuzzyMonth,
+      invalid_other: [nil, '2'],
+      cases: [
+          {
+              arg: '2',
+              init_other: true,
+              less: %w(3 2-3),
+              equal: [:same_args],
+              greater: %w(1 1-3)
+          },
+          {
+              arg: '2-4',
+              init_other: true,
+              less: %w(3 2-5 3-4),
+              equal: [:same_args],
+              greater: %w(1 2 2-3)
+          }
+      ]
+  }
 end
 
 
@@ -371,67 +289,26 @@ RSpec.describe FuzzyDay, type: :concern do
     end
   end
 
-  context 'Comparable' do
-    specify 'is incomparable to other objects' do
-      expect(fuzzy_day <=> '12').to be_nil
-    end
-
-    context 'with value "12"' do
-      let(:fuzzy_day) { FuzzyDay.new('12') }
-
-      context 'is smaller' do
-        %w(12-13 13).each do |arg|
-          specify "than \"#{arg}\"" do
-            expect(fuzzy_day < FuzzyDay.new(arg)).to be_truthy
-          end
-        end
-      end
-
-      context 'is equal' do
-        specify 'to "12"' do
-          expect(fuzzy_day == FuzzyDay.new('12')).to be_truthy
-        end
-      end
-
-      context 'is larger' do
-        %w(11 11-13).each do |arg|
-          specify "than \"#{arg}\"" do
-            expect(fuzzy_day > FuzzyDay.new(arg)).to be_truthy
-          end
-        end
-      end
-
-      specify 'is incomparable to nil' do
-        expect(fuzzy_day <=> FuzzyDay.new).to be_nil
-      end
-    end
-
-    context 'with value "12-14"' do
-      let(:fuzzy_day) { FuzzyDay.new('12-14') }
-
-      context 'is smaller' do
-        %w(13 12-15 13-14).each do |arg|
-          specify "than \"#{arg}\"" do
-            expect(fuzzy_day < FuzzyDay.new(arg)).to be_truthy
-          end
-        end
-      end
-
-      context 'is equal' do
-        specify 'to "12-14"' do
-          expect(fuzzy_day == FuzzyDay.new('12-14')).to be_truthy
-        end
-      end
-
-      context 'is larger' do
-        %w(11 12 12-13).each do |arg|
-          specify "than \"#{arg}\"" do
-            expect(fuzzy_day > FuzzyDay.new(arg)).to be_truthy
-          end
-        end
-      end
-    end
-  end
+  it_behaves_like 'a comparable object', {
+      test_klass: FuzzyDay,
+      invalid_other: [nil, '2'],
+      cases: [
+          {
+              arg: '2',
+              init_other: true,
+              less: %w(3 2-3),
+              equal: [:same_args],
+              greater: %w(1 1-3)
+          },
+          {
+              arg: '2-4',
+              init_other: true,
+              less: %w(3 2-5 3-4),
+              equal: [:same_args],
+              greater: %w(1 2 2-3)
+          }
+      ]
+  }
 
   describe '#to_s' do
     specify 'just the value' do
@@ -451,29 +328,18 @@ RSpec.describe FuzzyDate, type: :concern do
     end
   end
 
-  context 'Comparable' do
-    context 'with value "1234-03-26 - 5678-02-13"' do
-      let(:date) { FuzzyDate.new(FuzzyYear.new('1234-5678'),
-                                 FuzzyMonth.new('3-2'),
-                                 FuzzyDay.new('26-13')) }
-
-      context 'is smaller' do
-        specify 'than "1234-03-27"' do
-          expect(date < Date.new(1234, 3, 27)).to be_truthy
-        end
-      end
-
-      context 'is equal' do
-        specify 'to "1234-03-26 - 5678-02-13"' do
-          expect(date == FuzzyDate.new(date.year, date.month, date.day)).to be_truthy
-        end
-      end
-
-      context 'is larger' do
-        specify 'than "1234-03-26"' do
-          expect(date > Date.new(1234, 3, 26)).to be_truthy
-        end
-      end
-    end
-  end
+  it_behaves_like 'a comparable object', {
+      test_klass: FuzzyDate,
+      invalid_other: [nil, '2'],
+      cases: [
+          {
+              arg: [FuzzyYear.new('1234-5678'), FuzzyMonth.new('3-2'), FuzzyDay.new('26-13')],
+              arg_expand: true,
+              init_other: false,
+              less: [Date.new(1234, 3, 27)],
+              equal: [:same_args],
+              greater: [Date.new(1234, 3, 26)]
+          }
+      ]
+  }
 end
