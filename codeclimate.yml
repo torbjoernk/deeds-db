@@ -12,6 +12,9 @@ engines:
       languages:
       - ruby
       - javascript
+    exclude_fingerprints:
+      - 3f142b3685ae40b36583fe87bf4525f8
+      - d2def7b4dd40d3deb6df91268ff2df02
   eslint:
     enabled: true
   fixme:
