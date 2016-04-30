@@ -238,6 +238,7 @@ class FuzzyDate
   end
 
   private
+
   def finalize_year
     begin_year = 0
     end_year = Date.today.year
@@ -250,7 +251,6 @@ class FuzzyDate
     [begin_year, end_year]
   end
 
-  private
   def finalize_month
     begin_month = 1
     end_month = 12
@@ -263,7 +263,6 @@ class FuzzyDate
     [begin_month, end_month]
   end
 
-  private
   def finalize_day
     begin_day = 1
     end_day = -1
