@@ -7,7 +7,7 @@ module SauceDriver
     end
 
     def caps(name)
-      caps = {
+      {
           platform: 'Linux',
           browserName: 'Chrome',
           version: '31',

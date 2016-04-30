@@ -5,6 +5,7 @@ machine:
     DB_USER: ubuntu
     DB_NAME: circle_test
     SAUCE_USERNAME: torbjoernk
+    COVERALLS_PARALLEL: true
 
 dependencies:
   bundler:
@@ -19,3 +20,7 @@ test:
         background: true
     - ./circleci.sh:
         parallel: true
+
+notify:
+  webhooks:
+    - url: https://coveralls.io/webhook?repo_token=$COVERALLS_REPO_TOKEN
